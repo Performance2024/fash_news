@@ -1,3 +1,4 @@
+import 'package:fash_news/pages/home.dart';
 import 'package:fash_news/pages/signup.dart';
 import 'package:flutter/material.dart';
 
@@ -10,9 +11,9 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  MaterialApp(
+    return   MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: SignUp()
+      home: Home()
     );
   }
 }
