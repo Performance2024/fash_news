@@ -1,18 +1,83 @@
+import 'package:fash_news/tab_bar/tab_views/tab_view_1.dart';
 import 'package:fash_news/utils/colors.dart';
 import 'package:flutter/material.dart';
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
   Home({super.key});
+
+  @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  int _currentIndex = 0;
+
   final tabBarItems = [
     'For you',
     'U.S. Politics',
     'Tech Cos',
-    'Cooking ',
-    'Health ',
+    'Cooking',
+    'Health',
   ];
+
+  final _bottomNaviationItem = [
+    {'img': 'img/home-variant.png', 'label': 'Home'},
+    {'img': 'img/discovery.png', 'label': 'Discover'},
+    {'img': 'img/bookmark.png', 'label': 'Saved'},
+    {'img': 'img/profile-user.png', 'label': 'Profile'},
+  ];
+
+  List<BottomNavigationBarItem> bottomBarItemsWidget(List<dynamic> items) {
+    List<BottomNavigationBarItem> tabsWidget = [];
+
+    for (var item in items) {
+      tabsWidget.add(BottomNavigationBarItem(
+          activeIcon: Image.asset(
+            item['img'],
+            width: 24.0,
+            color: Color(text_dark),
+          ),
+          icon: Image.asset(
+            item['img'],
+            width: 24.0,
+            color: Color(text_gray),
+          ),
+          label: item['label']));
+    }
+    return tabsWidget;
+  }
+
+  List<Widget> tabBarItemsWidget(List<String> items) {
+    List<Widget> tabsWidget = [];
+    for (var item in items) {
+      tabsWidget.add(Text(item));
+    }
+    return tabsWidget;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+            color: Colors.white,
+            boxShadow: [BoxShadow(color: Color(brd_lgthgr), blurRadius: 50.0)]),
+        padding: const EdgeInsets.symmetric(vertical: 15.0),
+        child: BottomNavigationBar(
+            selectedFontSize: 12,
+            onTap: (index) => setState(() {
+                  _currentIndex = index;
+                }),
+                type: BottomNavigationBarType.fixed,
+            currentIndex: _currentIndex,
+            showSelectedLabels: true,
+            showUnselectedLabels: true,
+            selectedItemColor: Color(text_dark),
+            unselectedItemColor: Color(text_gray),
+            backgroundColor: Colors.white,
+            elevation: 0.0,
+            items: bottomBarItemsWidget(_bottomNaviationItem)),
+      ),
       backgroundColor: Color(bg_white),
       body: SafeArea(
           child: Column(
@@ -96,22 +161,32 @@ class Home extends StatelessWidget {
           ),
           Expanded(
             child: Container(
-              child: const DefaultTabController(
-                length: 4,
+              padding: const EdgeInsets.symmetric(horizontal: 5.0),
+              child: DefaultTabController(
+                length: tabBarItems.length,
                 child: Column(
                   children: [
-                    TabBar(tabs: [
-                      Tab(text: 'For You'),
-                      Tab(text: 'For You'),
-                      Tab(text: 'For You'),
-                      Tab(text: 'For You'),
-                    ]),
+                    TabBar(
+                        labelPadding:
+                            const EdgeInsets.fromLTRB(0.0, 0.0, 17.0, 0.0),
+                        tabAlignment: TabAlignment.start,
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 20.0, horizontal: 20.0),
+                        isScrollable: true,
+                        unselectedLabelColor: Color(text_gray),
+                        labelColor: Color(text_dark),
+                        labelStyle: const TextStyle(
+                            fontFamily: 'OutFit', fontWeight: FontWeight.w500),
+                        indicator: BoxDecoration(color: Color(bg_white)),
+                        dividerHeight: 0.0,
+                        tabs: tabBarItemsWidget(tabBarItems)),
                     Expanded(
                       child: TabBarView(children: [
-                        Text('1'),
-                        Text('2'),
-                        Text('3'),
-                        Text('4'),
+                        TabView1(),
+                        Text('For You'),
+                        Text('For You'),
+                        Text('For You'),
+                        Text('For You'),
                       ]),
                     )
                   ],

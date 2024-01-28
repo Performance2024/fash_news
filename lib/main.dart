@@ -1,4 +1,5 @@
 import 'package:fash_news/pages/home.dart';
+import 'package:fash_news/pages/publishers.dart';
 import 'package:fash_news/pages/signup.dart';
 import 'package:flutter/material.dart';
 
@@ -13,7 +14,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return   MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Home()
+      home: SignUp()
     );
   }
 }
